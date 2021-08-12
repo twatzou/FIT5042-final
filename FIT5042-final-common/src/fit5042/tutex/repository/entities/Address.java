@@ -11,12 +11,12 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Eddie Leung
+ * @author zou
  */
 @RequestScoped
 @Named(value = "address")
 public class Address implements Serializable {
-    
+
     private String streetNumber;
     private String streetAddress;
     private String suburb;
@@ -77,5 +77,5 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return streetNumber + " " + streetAddress + ", " + suburb + ", " + state + " " + postcode;
-    } 
+    }
 }
