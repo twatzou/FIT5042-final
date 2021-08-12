@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>#{titleController.pageTitle}</title> 
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="navbar navbar-inverse">
+                <div class="navbar-brand">
+                    #{titleController.pageTitle} - Customer  List
+                </div>
+            </div>
+
+            <h:form id="MyForm">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td> 
+                            <h:outputLabel id="Id" value="CustomerId"  />
+                        </td>
+						<td> 
+                            <h:outputLabel id="CustomerPhoneNumber" value="CustomerPhoneNumber"  />
+                        </td> 
+                        <td> 
+                            <h:outputLabel id="Product" value="Product"  />
+                        </td>
+                        <td> 
+                            <h:outputLabel id="Price" value="Price"  />
+                        </td>                       
+                        <td> 
+                            <h:outputLabel id="Contact" value="Contact"/>
+                        </td>
+						<td> 
+                            <h:outputLabel id="Address" value="Address"/>
+                        </td>                        
+						<td> 
+                            <h:outputLabel id="Operation" value="Operation"/>
+                        </td>
+                       
+
+                    </tr>
+
+                    <ui:repeat id="Myrepeat" value="#{customerApplication.customers}"  var="customer" varStatus="status"> 
+
+                        <tr onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent;
+                            document.getElementById('MyForm:selectedId').value = document.getElementById('MyForm:Myrepeat:#{status.index}:MainCustomerID').textContent;"> 
+                            <td>
+                                <h:outputText value="#{customerApplication.customers.get(status.index).customerId}" id="MainCustomerID" /> 
+                            </td>
+                            
+                            <td> 
+                                <h:outputText id="outCustomerPhoneNumber" value="#{customerApplication.customers.get(status.index).customerPhoneNumber}"  />
+                            </td>
+                            <td> 
+                                <h:outputText id="outProduct" value="#{customerApplication.customers.get(status.index).product}"  />
+                            </td>                                                        	
+                            <td> 
+                                <h:outputText id="outPrice" value="#{customerApplication.customers.get(status.index).price}"  />
+                            </td>
+                            <td> 
+                                <h:outputText id="outContact" value="#{customerApplication.customers.get(status.index).contactPerson}"  />
+                            </td>                            
+                            <td>
+                                <h:outputText id="outAddress" value="#{customerApplication.customers.get(status.index).address}"></h:outputText>
+                            </td>
+                            
+                            <td>
+                                <h:link value="View | " outcome="detail.xhtml" disabled="#{customerApplication.customers.get(status.index).customerId == null}">
+                                    <!-- pass the parameter to next page, the param name is customerID, and the value is index + 1. 
+                                    You can get the value from next page using the indexController -->
+                                    <f:param name="customerID" value="#{status.index + 1}"/>
+
+                                </h:link>
+                                <h:link value="Edit | " outcome="edit.xhtml" disabled="#{customerApplication.customers.get(status.index).customerId == null}">
+                                    <!-- pass the parameter to next page, the param name is customerID, and the value is index + 1. 
+                                    You can get the value from next page using the indexController -->
+                                    <f:param name="customerID"  value="#{status.index + 1}"></f:param> 
+                                </h:link>
+
+                                <h:commandLink value="Delete" action="#{removeCustomer.removeCustomer(customerApplication.customers.get(status.index).customerId)}" disabled="#{customerApplication.customers.get(status.index).customerId == null}">
+                                </h:commandLink>
+
+                                <h:outputText value=" "/>
+                            </td>
+
+                        </tr> 
+
+                    </ui:repeat> 
+
+                </table>
+
+                <div>
+                    <h:link id="add" value="Add" outcome="add.xhtml" class="btn btn-primary" />
+                    &nbsp; &nbsp;
+                    <h:commandButton id="viewAll" value="View All" action="#{searchCustomer.searchAll()}" class="btn btn-primary" >
+                        <f:param name="customerID" value="#{status.index + 1}"/>
+                    </h:commandButton>
+                </div>
+                <br></br><br></br>
+                <div>
+                    <h:inputText value="#{searchCustomer.searchByInt}" id="searchById" required="true" onchange ="if (document.getElementById('MyForm:searchById').value.trim() == '') {document.getElementById('MyForm:searchById').value = 0;} "  /> 
+                    <h:commandButton id="searchId" value="Search by Id" action="#{searchCustomer.searchCustomerById(searchCustomer.searchByInt)}" class="btn btn-primary" >
+                        <f:param name="customerID" value="#{status.index + 1}"/>
+                    </h:commandButton>
+				<br></br><br></br>
+                    <h:selectOneMenu id="contact" value="#{searchCustomer.contactPersonId}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                        <f:selectItems value="#{customerManagedBean.allContactPeople}" var="c"  
+                                       itemLabel="#{c.name}" itemValue="#{c.conactPersonId}" />
+                    </h:selectOneMenu>
+                    <h:commandButton id="searchByContact" value="Search by Contact" action="#{searchCustomer.searchCustomerByContactPersonId(searchCustomer.contactPersonId)}" class="btn btn-primary" >
+                        <f:param name="customerID" value="#{status.index + 1}"/>
+                    </h:commandButton>
+                </div>
+
+                    
+                 
+                    
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
