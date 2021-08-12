@@ -17,7 +17,7 @@ import fit5042.tutex.repository.entities.ContactPerson;
  */
 /**
  *
- * @author Guan
+ * @author Guan & zou
  */
 @RequestScoped
 @Named("searchCustomer")
@@ -118,7 +118,7 @@ public class SearchCustomer {
     public void searchCustomerByContactPersonId(int contactPersonId) {
         try {
         	int p = contactPersonId;
-            //search all properties by contact person from db via EJB 
+            //search all properties by contact person from db via EJB
             app.searchCustomerByContactPersonId(contactPersonId);
         } catch (Exception ex) {
 

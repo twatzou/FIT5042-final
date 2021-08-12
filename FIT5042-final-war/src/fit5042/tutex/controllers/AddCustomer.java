@@ -16,7 +16,7 @@ import fit5042.tutex.repository.entities.Customer;
  */
 /**
  *
- * @author Guan
+ * @author Guan & zou
  */
 @RequestScoped
 @Named("addCustomer")

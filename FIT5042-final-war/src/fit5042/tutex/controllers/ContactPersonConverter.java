@@ -8,7 +8,7 @@ package fit5042.tutex.controllers;
 import fit5042.tutex.repository.entities.ContactPerson;
 /**
  *
- * @author Guan
+ * @author Guan & zou
  */
 import fit5042.tutex.mbeans.CustomerManagedBean;
 import java.util.ArrayList;

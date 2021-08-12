@@ -17,16 +17,16 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Eddie
+ * @author Eddie & zou
  */
 @RequestScoped
 @Named(value = "contactperson")
 public class ContactPerson implements Serializable {
-    
+
     private int conactPersonId;
     private String name;
     private String phoneNumber;
-    
+
     private Set<Customer> properties;
 
     public ContactPerson() {
